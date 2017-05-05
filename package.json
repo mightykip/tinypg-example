@@ -1,11 +1,20 @@
 {
-  "name": "tiny-post",
+  "name": "tinypg-example",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Example project for TinyPg",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf './src/**/*.js' './src/**/*.js.map'",
+    "build": "npm run clean && tsc",
+    "start": "npm run build && node src/index.js"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Joe Andaverde",
+  "license": "MIT",
+  "dependencies": {
+    "tinypg": "2.0.0-alpha.17"
+  },
+  "devDependencies": {
+    "@types/node": "7.0.18",
+    "typescript": "2.3.2",
+    "rimraf": "2.6.1"
+  }
 }

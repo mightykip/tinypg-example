@@ -1,40 +1,40 @@
 CREATE DATABASE tinypg_example;
 
-\connect tinypg_example;
+\connect tinypg_example
 
 CREATE SCHEMA IF NOT EXISTS tinypg;
 
 SET search_path TO tinypg, public;
 
 DROP TABLE IF EXISTS tinypg.address;
-DROP TABLE IF EXISTS tinypg.person;
+DROP TABLE IF EXISTS tinypg.customer;
 
-CREATE TABLE tinypg.person (
-   person_id serial PRIMARY KEY,
+CREATE TABLE tinypg.customer (
+   customer_id serial PRIMARY KEY,
    first_name text,
    last_name text
 );
 
 CREATE TABLE tinypg.address (
    address_id serial PRIMARY KEY,
-   person_id int,
-   address text,
+   customer_id int,
+   street text,
    city text,
    state text,
    zip int,
-   FOREIGN KEY (person_id) REFERENCES tinypg.person
+   FOREIGN KEY (customer_id) REFERENCES tinypg.customer
 );
 
-WITH new_person AS (
-   INSERT INTO tinypg.person (first_name, last_name) VALUES ('Joe', 'Andaverde')
+WITH new_customer AS (
+   INSERT INTO tinypg.customer (first_name, last_name) VALUES ('Steve', 'Jobs')
    RETURNING *
 )
 INSERT INTO tinypg.address (
-   person_id, address, city, state, zip)
+   customer_id, street, city, state, zip)
 VALUES (
-   (SELECT person_id FROM new_person),
+   (SELECT customer_id FROM new_customer),
    '123 W 10th St',
-   'Shawnee',
-   'Kansas',
-   66666
+   'Palo Alto',
+   'California',
+   94301
 );
